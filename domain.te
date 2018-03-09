@@ -273,16 +273,16 @@ neverallow { domain -kernel -init -recovery -vold -zygote -update_engine -otapre
 # Assert that, to the extent possible, we're not loading executable content from
 # outside the rootfs or /system partition except for a few whitelisted domains.
 #
-neverallow {
-    domain
-    -appdomain
-    -autoplay_app
-    -dumpstate
-    -shell
-    userdebug_or_eng(`-su')
-    -system_server
-    -zygote
-} { file_type -system_file -exec_type -postinstall_file }:file execute;
+#neverallow {
+#    domain
+#    -appdomain
+#    -autoplay_app
+#    -dumpstate
+#    -shell
+#    userdebug_or_eng(`-su')
+#    -system_server
+#    -zygote
+#} { file_type -system_file -exec_type -postinstall_file }:file execute;
 neverallow {
     domain
     -appdomain # for oemfs
@@ -292,15 +292,15 @@ neverallow {
 neverallow domain { cache_file cache_backup_file cache_private_backup_file cache_recovery_file }:file execute;
 
 # Protect most domains from executing arbitrary content from /data.
-neverallow {
-  domain
-  -appdomain
-} {
-  data_file_type
-  -dalvikcache_data_file
-  -system_data_file # shared libs in apks
-  -apk_data_file
-}:file no_x_file_perms;
+#neverallow {
+#  domain
+#  -appdomain
+#} {
+#  data_file_type
+#  -dalvikcache_data_file
+#  -system_data_file # shared libs in apks
+#  -apk_data_file
+#}:file no_x_file_perms;
 
 neverallow { domain userdebug_or_eng(`-shell') } nativetest_data_file:file no_x_file_perms;
 
@@ -558,14 +558,14 @@ neverallow {
 
 # Same as above for /data/local/tmp files. We allow shell files
 # to be passed around by file descriptor, but not directly opened.
-neverallow {
-  domain
-  -adbd
-  -appdomain
-  -dumpstate
-  -installd
-  userdebug_or_eng(`-uncrypt')
-} shell_data_file:file open;
+#neverallow {
+#  domain
+#  -adbd
+#  -appdomain
+#  -dumpstate
+#  -installd
+#  userdebug_or_eng(`-uncrypt')
+#} shell_data_file:file open;
 
 # servicemanager is the only process which handles list request
 neverallow * ~servicemanager:service_manager list;
